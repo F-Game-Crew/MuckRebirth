@@ -5,7 +5,7 @@ using UnityEngine;
 public class TreePlacement : MonoBehaviour
 {
     public GameObject treePrefab; 
-    public int scale;
+    public int sizeScale;
     public float minHeight;
     public float maxHeight;
     public int treeCount;
@@ -47,7 +47,7 @@ public class TreePlacement : MonoBehaviour
                 randomPosition *= meshScale;
                 randomPosition = transform.TransformPoint(randomPosition);
                 GameObject tree = Instantiate(treePrefab, randomPosition, Quaternion.identity, transform);
-                tree.transform.localScale = new Vector3(scale, scale, scale);
+                tree.transform.localScale = new Vector3(sizeScale, sizeScale, sizeScale);
                 tree.AddComponent<MeshCollider>();
             }
         }

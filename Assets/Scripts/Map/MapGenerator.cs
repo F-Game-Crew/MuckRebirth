@@ -5,7 +5,8 @@ public class MapGenerator : MonoBehaviour
   public enum DrawMode {
     Noise,
     Color,
-    Mesh
+    Mesh,
+    Falloff
   }
   public DrawMode drawMode;
 
@@ -27,7 +28,6 @@ public class MapGenerator : MonoBehaviour
 
   public bool autoUpdate;
   public TerrainType[] regions;
-  public GameObject treeSpawner;
   MapDisplay display;
   
 
@@ -36,37 +36,43 @@ public class MapGenerator : MonoBehaviour
   }
 
   public void Generate () {
-    float[,] noiseMap = NoiseGenerator.NewTerrain (
-      mapChunkSize,
+    (float[,], float[,]) noise = NoiseGenerator.NewTerrain (
       mapChunkSize,
       seed,
       noiseScale,
       octaves,
       lacunarity,
       persistance,
-      offset
+      offset,
+      useFalloff
       ); 
 
     display = FindObjectOfType<MapDisplay>();
 
     if (drawMode == DrawMode.Noise) {
-      display.DrawTexture(
-        MapTextureGenerator.NoiseFromHeightMap(noiseMap),
-        mapChunkSize,
-        mapChunkSize
+        display.DrawTexture(
+          MapTextureGenerator.NoiseFromHeightMap(noise.Item1),
+          mapChunkSize,
+          mapChunkSize
         );
     } else if (drawMode == DrawMode.Color) {
-      display.DrawTexture (
-        MapTextureGenerator.ColorFromHeightMap(noiseMap, regions),
-        mapChunkSize,
-        mapChunkSize
-     );
+        display.DrawTexture (
+          MapTextureGenerator.ColorFromHeightMap(noise.Item1, regions),
+          mapChunkSize,
+          mapChunkSize
+        );
     } else if (drawMode == DrawMode.Mesh) {
-      display.DrawMesh(
-        MeshGenerator.NewTerrain(noiseMap, heightCurve, heightMultipler),
-        MapTextureGenerator.ColorFromHeightMap(noiseMap, regions),
-        meshScale
-      );
+        display.DrawMesh(
+          MeshGenerator.NewTerrain(noise.Item1, heightCurve, heightMultipler),
+          MapTextureGenerator.ColorFromHeightMap(noise.Item1, regions),
+          meshScale
+        );
+      } else if (drawMode == DrawMode.Falloff) {
+        display.DrawTexture(
+          MapTextureGenerator.NoiseFromHeightMap(noise.Item2),
+          mapChunkSize,
+          mapChunkSize
+        );;
     }
   }
 
