@@ -12,7 +12,7 @@ public class PlayerManager : MonoBehaviour
     public bool isInteracting;
     private void Awake()
     {
-        
+        cameraManager = FindObjectOfType<CameraManager>();
         inputManager = GetComponent<InputManager>();
         playerLocotion = GetComponent<PlayerLocation>();
         _animator = GetComponent<Animator>();

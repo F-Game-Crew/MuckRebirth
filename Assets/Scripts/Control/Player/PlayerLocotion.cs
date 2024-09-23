@@ -9,22 +9,26 @@ public class PlayerLocation : MonoBehaviour
     public InputManager inputManager;
     public AnimatorManager _animatorManager;
     public Transform cameraObject;
-    public Vector3 movementDirection;
     public Rigidbody playerRigidbody;
-    public bool isGrounded;
-    public bool isLand;
+    
+    [Header("Movement Speed")]
+    public Vector3 movementDirection;
+    public bool isRunning;
+    public float rotationSpeed = 2.0f;
+    public float runSpeed;
     public float movementSpeed = 5.0f;
+    [Header("Jumping")]
+    public float jumpHeight = 3;
+    public float gravityIndentity = -20;
+    public bool isJumping;
+    public float raycastHeightOffSet = 0.5f;
+    [Header("Falling")]
     public float fallingVelocity;
     public float leapingVelocity;
     public float inAirTime;
-    public float rotationSpeed = 2.0f;
-    public float runSpeed;
-    public float jumpHeight = 3;
-    public float gravityIndentity = -20;
-    public bool isRunning;
-    public bool isJumping;
-    public float raycastHeightOffSet = 0.5f;
     public LayerMask groundLayer;
+    public bool isGrounded;
+    public bool isLand;
     private void Awake()
     {
         _animatorManager = GetComponent<AnimatorManager>();

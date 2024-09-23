@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class AnimatorManager : MonoBehaviour
 {
+    
     public Animator _animator;
     private int _horizontal;
     private int _vertical;
@@ -16,7 +17,6 @@ public class AnimatorManager : MonoBehaviour
         _horizontal = Animator.StringToHash("Horizontal");
         _vertical = Animator.StringToHash("Vertical");
     }
-
     public void TargetAnimation(string targetAnimation, bool isInteracting)
     {
         _animator.SetBool("isInteracting",isInteracting);
