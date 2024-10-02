@@ -22,17 +22,31 @@ public class SkeletonEnemyLocation : MonoBehaviour
     private Transform _targetTransform;
     public Rigidbody rigidbody;
     public AnimatorManagerEnemy animatorManager;
+
+    // ==========
+    // Attributes ==========
+    private bool canSeeTarget;
+    private Viewable view;
+
     private void Awake()
     {
         _targetTransform = FindObjectOfType<PlayerManager>().transform;
         animatorManager = FindObjectOfType<AnimatorManagerEnemy>();
         rigidbody = GetComponent<Rigidbody>();
+        view = GetComponent<Viewable>();
+        canSeeTarget = false;
+    }
+
+    private void Update () {
+       canSeeTarget = view.canSeeTarget;
     }
     
     public void HandleAllAction( )
     {
-        EnemyMovement();
-        EnemyRotation();
+        if(canSeeTarget) {
+            EnemyMovement();
+            EnemyRotation();
+        }
     }
     public void EnemyMovement( )
     {

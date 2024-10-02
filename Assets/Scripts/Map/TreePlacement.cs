@@ -46,9 +46,8 @@ public class TreePlacement : MonoBehaviour
                 placedTree++;
                 randomPosition *= meshScale;
                 randomPosition = transform.TransformPoint(randomPosition);
-                GameObject tree = Instantiate(treePrefab, randomPosition, Quaternion.identity, transform);
-                tree.transform.localScale = new Vector3(sizeScale, sizeScale, sizeScale);
-                tree.AddComponent<MeshCollider>();
+                TreeEntity tree = new TreeEntity (treePrefab, randomPosition, transform); 
+                tree.Spawn(sizeScale);
             }
         }
     }
