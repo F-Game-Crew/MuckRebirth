@@ -1,13 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SkeletonEnemyLocation : MonoBehaviour
 {
     [Header("Attribute Enemy")]
     public float healthPoint;
-    
+
     public float rangeAttack;
     public float rangeLook;
     public float speedAttack;
@@ -24,8 +21,9 @@ public class SkeletonEnemyLocation : MonoBehaviour
     public AnimatorManagerEnemy animatorManager;
 
     // ==========
-    // Attributes ==========
-    private bool canSeeTarget;
+    // Attributes
+    // ==========
+    private bool haveEntityInView;
     private Viewable view;
 
     private void Awake()
@@ -34,26 +32,28 @@ public class SkeletonEnemyLocation : MonoBehaviour
         animatorManager = FindObjectOfType<AnimatorManagerEnemy>();
         rigidbody = GetComponent<Rigidbody>();
         view = GetComponent<Viewable>();
-        canSeeTarget = false;
+        haveEntityInView = false;
     }
 
-    private void Update () {
-       canSeeTarget = view.canSeeTarget;
-    }
-    
-    public void HandleAllAction( )
+    private void Update()
     {
-        if(canSeeTarget) {
+        haveEntityInView = view.entitiesInView.Count > 0;
+    }
+
+    public void HandleAllAction()
+    {
+        if (haveEntityInView)
+        {
             EnemyMovement();
             EnemyRotation();
         }
     }
-    public void EnemyMovement( )
+    public void EnemyMovement()
     {
         Vector3 targetPosition = Vector3.SmoothDamp(transform.position, _targetTransform.position,
             ref moveVelocity, smoothTime);
         animatorManager.TargetAnimation("Running", true);
-        transform.position= targetPosition;
+        transform.position = targetPosition;
     }
 
     public void EnemyAttack()
@@ -65,6 +65,6 @@ public class SkeletonEnemyLocation : MonoBehaviour
     {
         Vector3 targetRotation = _targetTransform.position - transform.position;
         Quaternion rotation = Quaternion.LookRotation(targetRotation);
-        transform.rotation = Quaternion.Lerp(transform.rotation,rotation,Time.deltaTime * 5);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * 5);
     }
 }

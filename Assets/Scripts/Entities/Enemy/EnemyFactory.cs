@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyFactory : MonoBehaviour
@@ -20,6 +18,6 @@ public class EnemyFactory : MonoBehaviour
             Debug.Log("Fail spawn");
             return null;
         }
-        
+
     }
 }
