@@ -12,7 +12,7 @@ public class Viewable : MonoBehaviour
     public LayerMask obstructionMask;
 
     public List<GameObject> entitiesInView { get; set; } = new List<GameObject>();
-    public Collider[] entitiesInRadius { get; set; } = new Collider[10];
+    public Collider[] entitiesInRadius { get; set; } = new Collider[5];
 
     public void Start()
     {
@@ -28,10 +28,6 @@ public class Viewable : MonoBehaviour
         {
             yield return wait;
             CheckInRange();
-            if (entitiesInView.Count > 0)
-            {
-                Debug.Log(transform.name + ": " + entitiesInView.Count);
-            }
         }
 
     }
@@ -41,7 +37,7 @@ public class Viewable : MonoBehaviour
         entitiesInView.Clear();
         for (int i = 0; i < entitiesInRadius.Length; i++)
         {
-            entitiesInRadius[i] = null; // Clear the array
+            entitiesInRadius[i] = null;
         }
 
         int count = Physics.OverlapSphereNonAlloc(transform.position, radius, entitiesInRadius, targetMask);
