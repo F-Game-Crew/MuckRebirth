@@ -2,17 +2,24 @@ using UnityEngine;
 
 public class Hitable : MonoBehaviour
 {
-    public float maxHeatlh;
+    public float maxHealth;
     private float currentHealth;
 
-    void Start()
+    private HealthBar healthBar;
+
+    private void Start()
     {
-        currentHealth = maxHeatlh;
+        healthBar = transform.Find("HealthBarUI/HealthBar").GetComponent<HealthBar>();
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+
+        Debug.Log(currentHealth);
     }
 
     public void TakeDamage(float damageValue)
     {
         currentHealth -= damageValue;
+        healthBar.SetHealth(currentHealth);
 
         if (currentHealth <= 0)
         {
