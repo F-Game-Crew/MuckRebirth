@@ -1,17 +1,3 @@
-using UnityEngine;
-
-public class SkeletonEnemy : Enemy
+public class Skeleton : Monster
 {
-    [SerializeField] private GameObject _enemyPrefabs;
-
-    public override GameObject GetEnemyPrefab()
-    {
-        Debug.Log("Skeleton Created");
-        return _enemyPrefabs;
-    }
-
-    public override void SetEnemyPrefab(GameObject gameObject)
-    {
-        _enemyPrefabs = gameObject;
-    }
 }

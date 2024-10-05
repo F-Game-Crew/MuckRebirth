@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -8,13 +5,14 @@ public class PlayerManager : MonoBehaviour
     private Animator _animator;
     public CameraManager cameraManager;
     public InputManager inputManager;
-    public PlayerLocation playerLocotion;
+    public PlayerLocation playerLocation;
     public bool isInteracting;
+
     private void Awake()
     {
         cameraManager = FindObjectOfType<CameraManager>();
         inputManager = GetComponent<InputManager>();
-        playerLocotion = GetComponent<PlayerLocation>();
+        playerLocation = GetComponent<PlayerLocation>();
         _animator = GetComponent<Animator>();
     }
 
@@ -25,8 +23,8 @@ public class PlayerManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        playerLocotion.HandleAllMovement();
-        
+        playerLocation.HandleAllMovement();
+
     }
 
     private void LateUpdate()
@@ -34,7 +32,7 @@ public class PlayerManager : MonoBehaviour
         cameraManager.HandleAllCamera();
 
         isInteracting = _animator.GetBool("isInteracting");
-        playerLocotion.isJumping = _animator.GetBool("isJumping");
-        _animator.SetBool("isGrounded",playerLocotion.isGrounded);
+        playerLocation.isJumping = _animator.GetBool("isJumping");
+        _animator.SetBool("isGrounded", playerLocation.isGrounded);
     }
 }

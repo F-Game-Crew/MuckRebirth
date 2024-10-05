@@ -1,22 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerFactory : MonoBehaviour
 {
-    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private GameObject prefab;
 
-    public PlayerOne createPlayerOne(string s)
+    public Player CreatePlayer(PlayerType type)
     {
-        if (s == "p")
+        switch (type)
         {
-            var player = new PlayerOne();
-            player.SetPlayerPrefabs(playerPrefab);
-            return player;
-        }
-        else
-        {
-            return null;
+            case PlayerType.Default:
+                Player player = new Player();
+                player.SetPrefab(prefab);
+                return player;
+            default:
+                throw new System.Exception("Your player type is not exist in our player system!");
         }
     }
 }

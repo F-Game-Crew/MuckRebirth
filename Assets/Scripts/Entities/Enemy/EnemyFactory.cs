@@ -1,23 +1,20 @@
 using UnityEngine;
 
-public class EnemyFactory : MonoBehaviour
+public class MonsterFactory : MonoBehaviour
 {
-    [SerializeField] private GameObject skeletonPrefab;
+    public GameObject prefab;
 
-    public Enemy CreateEnemy(string s)
+    public Monster CreateMonster(MonsterType type)
     {
-        Enemy enemy = null;
-        if (s == "m")
+        Monster monster;
+        switch (type)
         {
-            enemy = new SkeletonEnemy();
-            enemy.SetEnemyPrefab(skeletonPrefab);
-            return enemy;
+            case MonsterType.Skeleton:
+                monster = new Monster();
+                monster.SetPrefab(prefab);
+                return monster;
+            default:
+                throw new System.Exception("Your monster type is not exist in our monster system!");
         }
-        else
-        {
-            Debug.Log("Fail spawn");
-            return null;
-        }
-
     }
 }
