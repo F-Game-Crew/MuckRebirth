@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerLocation : MonoBehaviour
@@ -10,7 +7,7 @@ public class PlayerLocation : MonoBehaviour
     public AnimatorManager _animatorManager;
     public Transform cameraObject;
     public Rigidbody playerRigidbody;
-    
+
     [Header("Movement Speed")]
     public Vector3 movementDirection;
     public bool isRunning;
@@ -29,6 +26,7 @@ public class PlayerLocation : MonoBehaviour
     public LayerMask groundLayer;
     public bool isGrounded;
     public bool isLand;
+
     private void Awake()
     {
         _animatorManager = GetComponent<AnimatorManager>();
@@ -46,38 +44,42 @@ public class PlayerLocation : MonoBehaviour
             return;
         }
         HandleMovement();
-        HandleRotation();   
+        HandleRotation();
     }
+
     public void HandleMovement()
     {
         movementDirection = cameraObject.forward * inputManager.horizontal;
         movementDirection = movementDirection + cameraObject.right * inputManager.vertical;
         movementDirection.y = 0;
         movementDirection.Normalize();
-        
+
         if (isRunning)
         {
-            
             movementDirection *= runSpeed;
         }
         else
         {
             movementDirection *= movementSpeed;
         }
+
         Vector3 moveVelocity = movementDirection;
         playerRigidbody.velocity = moveVelocity;
     }
+
     public void HandleRotation()
     {
         if (isJumping)
         {
             return;
         }
+
         Vector3 targetDirection = Vector3.zero;
         targetDirection = cameraObject.forward * inputManager.horizontal;
         targetDirection = targetDirection + cameraObject.right * inputManager.vertical;
         targetDirection.y = 0;
         targetDirection.Normalize();
+
         if (targetDirection == Vector3.zero)
         {
             targetDirection = transform.forward;
@@ -91,7 +93,7 @@ public class PlayerLocation : MonoBehaviour
     {
         if (isGrounded)
         {
-            _animatorManager.TargetAnimation("Jump",true);
+            _animatorManager.TargetAnimation("Jump", true);
             float jumpVelocity = Mathf.Sqrt(-2 * gravityIndentity * jumpHeight);
             Vector3 playerVelocity = movementDirection;
             playerVelocity.y = jumpVelocity;
@@ -108,7 +110,7 @@ public class PlayerLocation : MonoBehaviour
         {
             if (!_playerManager.isInteracting)
             {
-                _animatorManager.TargetAnimation("Falling",true);
+                _animatorManager.TargetAnimation("Falling", true);
             }
 
             inAirTime = inAirTime + Time.deltaTime;
@@ -129,7 +131,6 @@ public class PlayerLocation : MonoBehaviour
         else
         {
             isGrounded = false;
-            
         }
     }
 }

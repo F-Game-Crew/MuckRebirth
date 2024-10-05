@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
@@ -11,7 +8,7 @@ public class EnemyManager : MonoBehaviour
     private void Awake()
     {
         _animator = GetComponent<Animator>();
-        
+
         _skeletonEnemyLocation = GetComponent<SkeletonEnemyLocation>();
     }
 
